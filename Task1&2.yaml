@@ -4,11 +4,11 @@ Parameters:
   GitHubOwner:
     Type: String
     Description: 'GitHub Repository Owner'
-    Default: 'i4isaactan'  
+    Default: 'i4isaactan'              #use desired github author
   GitHubRepo:
     Type: String
     Description: 'GitHub Repository Name'
-    Default: 'clonev2'  
+    Default: 'clonev2'                  #use desired github repo
   GitHubBranch:
     Type: String
     Description: 'GitHub Branch'
@@ -16,7 +16,7 @@ Parameters:
   WebsiteBucketName:
     Type: String
     Description: 'Name of the S3 bucket to host the website'
-    Default: 'static-website-updated2'  
+    Default: 'static-website-updated2'      
   PipelineArtifactBucketName:
     Type: String
     Description: 'Name of the S3 bucket to store pipeline artifacts'
