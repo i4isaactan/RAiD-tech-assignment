@@ -133,11 +133,7 @@ Resources:
                 Action:
                   - s3:ListBucket
                 Resource: !Sub 'arn:aws:s3:::${WebsiteBucket}'
-              - Effect: Allow
-                Action:
-                  - codebuild:BatchGetBuilds
-                  - codebuild:StartBuild
-                Resource: '*'
+
 
   CodePipelineWebhook:
     Type: 'AWS::CodePipeline::Webhook'
