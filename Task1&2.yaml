@@ -135,20 +135,6 @@ Resources:
                 Resource: !Sub 'arn:aws:s3:::${WebsiteBucket}'
 
 
-  CodePipelineWebhook:
-    Type: 'AWS::CodePipeline::Webhook'
-    Properties:
-      Name: !Sub "${AWS::StackName}-GitHubWebhook"
-      TargetPipeline: !Ref CodePipeline
-      TargetPipelineVersion: 1
-      TargetAction: GitHubSource
-      Filters:
-        - JsonPath: "$.ref"
-          MatchEquals: !Sub "refs/heads/${GitHubBranch}"
-      Authentication: GITHUB_HMAC
-      AuthenticationConfiguration:
-        SecretToken: !Ref GitHubOAuthToken
-      RegisterWithThirdParty: true
 
 Outputs:
   WebsiteURL:
