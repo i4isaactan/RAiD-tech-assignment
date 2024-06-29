@@ -1,0 +1,33 @@
+linuxServer:
+      hosts:
+          linux1:
+            ansible_host: 13.210.169.243
+            ansible_ssh_private_key_file: key1.pem
+            ansible_user: ec2-user
+
+          azure1:
+            ansible_host: 20.189.113.56
+            ansible_ssh_private_key_file: isaac1_key.pem
+            ansible_user: azureuser
+windowServer:
+      hosts:
+          win1: #2012 win that has port 455 already opened
+            ansible_host: 18.191.62.103
+            ansible_password: "@k3PD@E&6o"
+            ansible_user: Administrator
+            ansible_winrm_server_cert_validation: ignore
+            ansible_connection: winrm
+
+          win2: #2016 win that has port 455 is closed but we will open manually thru firewall
+            ansible_host: 3.128.155.101
+            ansible_password: "fGe5TcLNbV-CG)VTBPo=UV=U7LxSMcLs"
+            ansible_user: Administrator
+            ansible_winrm_server_cert_validation: ignore
+            ansible_connection: winrm
+
+          win3: #2016 win that we will run powershell script to make it ready for Ansible
+            ansible_host: 18.223.235.80
+            ansible_password: "@k9;)rnZs;)@@3y%xDLEvXpdvC6pJhWv"
+            ansible_user: Administrator
+            ansible_winrm_server_cert_validation: ignore
+            ansible_connection: winrm
