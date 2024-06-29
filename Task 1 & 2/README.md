@@ -1,4 +1,4 @@
-# RAiD Cloud Solution Architecting Challenge
+# Continuous Deployment
 
 ## Introduction
 
