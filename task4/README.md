@@ -1,8 +1,8 @@
-# Solution Architecting: Capgemini National Day Parade 2023 Web Application
+# Solution Architecting: National Day Parade 2023 Web Application
 
 ## Introduction
 
-As part of the Capgemini National Day Parade 2023 project, I was tasked with designing an AWS architecture to host their web application, which consists of a React frontend, a NodeJS backend, and a Postgres database. Below, I will detail the architecture I designed and how it aligns with the six pillars of the AWS Well-Architected Framework.
+As part of the  National Day Parade 2023 project, I was tasked with designing an AWS architecture to host their web application, which consists of a React frontend, a NodeJS backend, and a Postgres database. Below, I will detail the architecture I designed and how it aligns with the six pillars of the AWS Well-Architected Framework.
 
 ## Architecture Overview
 
@@ -20,7 +20,7 @@ For dynamic content or API requests, CloudFront forwards the requests to an Elas
 
 To achieve operational excellence, I implemented:
 * **Automated Deployments:** Leveraging Terraform for Infrastructure as Code (IaC) ensures consistent, repeatable deployments. This approach allows for rapid iteration and deployment of updates without manual intervention, thus minimizing errors and speeding up the deployment process.
-* **Monitoring and Logging:** Comprehensive logging and monitoring are provided by AWS CloudWatch and CloudTrail. This setup is particularly vital for the Capgemini web application, allowing the development team to quickly identify and address issues, ensuring smooth operation during high-traffic events like the National Day Parade.
+* **Monitoring and Logging:** Comprehensive logging and monitoring are provided by AWS CloudWatch and CloudTrail. This setup is particularly vital for the web application, allowing the development team to quickly identify and address issues, ensuring smooth operation during high-traffic events like the National Day Parade.
 
 ### 2. Security
 
@@ -48,7 +48,7 @@ For performance efficiency:
 
 Reducing operational costs can be done in a few ways:
 * **S3 for Static Content:** Using S3 for static website hosting is cost-effective compared to running a web server. This reduces costs while providing high durability and availability for the static assets of the web application.
-* **Auto Scaling:** Ensures only the necessary resources are used, reducing unnecessary costs. This design ensures that Capgemini only pays for what they use, avoiding over-provisioning and optimizing resource usage.
+* **Auto Scaling:** Ensures only the necessary resources are used, reducing unnecessary costs. This design ensures that we only pays for what they use, avoiding over-provisioning and optimizing resource usage.
 * **Reserved Instances:** If we are able to estimate or predict the traffic flow to the web server, we will be able to be cost efficient in our spending on compute costs.
 
 ### 6. Sustainability
@@ -59,5 +59,5 @@ Sustainability of resources such as energy or costs:
 
 ---
 
-This architecture ensures that the Capgemini National Day Parade 2023 web application is secure, highly available, and efficient, aligning with the AWS Well-Architected Framework.
+This architecture ensures that the National Day Parade web application is secure, highly available, and efficient, aligning with the AWS Well-Architected Framework.
 
