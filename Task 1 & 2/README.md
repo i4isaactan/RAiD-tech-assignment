@@ -53,3 +53,7 @@ Here is the logic:
 ### Conclusion
 
 Using multiple tools like CloudFormation, Terraform, and Ansible allowed me to explore different methods of deploying and managing infrastructure. Each tool has its strengths, and I gained valuable insights by working with all three.
+
+## Note
+
+The files 'deploy.yml' and 'Deploy to S3.yml' are the Github workflow files that gives github action the instructions.
