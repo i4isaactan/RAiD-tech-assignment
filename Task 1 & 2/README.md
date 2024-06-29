@@ -26,7 +26,7 @@ As this was my first time using GitHub as the source for a static website, it to
 
 **URL:** [http://terrabucketauto.s3-website-ap-southeast-2.amazonaws.com/](http://terrabucketauto.s3-website-ap-southeast-2.amazonaws.com/)
 
-Next, I experimented with Terraform to improve my skill set. Despite CloudFormation being useful, Terraform can interact with other cloud services easily. Moreover, Terraform seemed simpler to use and handle, with its syntax being much more straightforward and intuitive. I used AWS cloud to set up my S3 bucket using Terraform.
+Next, I experimented with Terraform to improve my skill set. Despite CloudFormation being useful, Terraform could interact with other cloud services easily. Moreover, Terraform seemed simpler to use and handle, with its syntax being much more straightforward and intuitive. I used AWS cloud to set up my S3 bucket using Terraform.
 
 ### Logic
 
