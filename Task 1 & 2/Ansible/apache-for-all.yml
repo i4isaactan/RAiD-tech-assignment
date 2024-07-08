@@ -1,0 +1,51 @@
+- name: Setup webserver and copy custom webpage
+  hosts: linux1, azure1
+  become: yes
+  tasks:
+
+     - name: Install Git
+       when: ansible_os_family == 'RedHat'
+       yum:
+         name: git
+         state: present
+
+     - name: Install Httpd For Redhat on AWS
+       when: ansible_os_family == 'RedHat'
+       yum:
+         name: httpd
+         state: latest
+
+    - name: Enable and start Httpd For Redhat on AWS
+      when: ansible_os_family == 'RedHat'
+      ansible.builtin.service:
+        name: httpd
+        enabled: yes
+        state: started
+
+    - name: Install Apache2 For Ubuntu on Azure
+      when: ansible_os_family == 'Debian'
+      apt: name=apache2 update_cache=yes state=latest
+
+    - name: Enable and start Apache2  For Ubuntu on Azure
+      when: ansible_os_family == 'Debian'
+      ansible.builtin.service:
+        name: apache2
+        enabled: yes
+        state: started
+
+    - name: Read-write git checkout from github
+      ansible.builtin.git:
+        repo: https://github.com/i4isaactan/retry
+        dest: /var/www/html
+
+    - name: Restart Httpd For Redhat on AWS
+      when: ansible_os_family == 'RedHat'
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+
+    - name: Restart Apache2  For Ubuntu on Azure
+      when: ansible_os_family == 'Debian'
+      ansible.builtin.service:
+        name: apache2
+        state: restarted
