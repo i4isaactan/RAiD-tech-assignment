@@ -1,0 +1,142 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  GitHubOwner:
+    Type: String
+    Description: 'GitHub Repository Owner'
+    Default: 'i4isaactan'              #use desired github author
+  GitHubRepo:
+    Type: String
+    Description: 'GitHub Repository Name'
+    Default: 'clonev2'                  #use desired github repo
+  GitHubBranch:
+    Type: String
+    Description: 'GitHub Branch'
+    Default: 'main'
+  WebsiteBucketName:
+    Type: String
+    Description: 'Name of the S3 bucket to host the website'
+    Default: 'static-website-updated2'      
+  PipelineArtifactBucketName:
+    Type: String
+    Description: 'Name of the S3 bucket to store pipeline artifacts'
+    Default: 'pipeline-github-isaac2'  
+  
+  GitHubOAuthToken:
+    Type: String
+    Description: 'GitHub OAuth Token'
+  
+
+Resources:
+  WebsiteBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub "${WebsiteBucketName}-${AWS::AccountId}-${AWS::Region}"
+      WebsiteConfiguration:
+        IndexDocument: index.html
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref WebsiteBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action: 's3:GetObject'
+            Resource: !Sub 'arn:aws:s3:::${WebsiteBucket}/*'
+
+  PipelineArtifactBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub "${PipelineArtifactBucketName}-${AWS::AccountId}-${AWS::Region}"
+
+  CodePipeline:
+    Type: 'AWS::CodePipeline::Pipeline'
+    Properties:
+      RoleArn: !GetAtt CodePipelineServiceRole.Arn
+      ArtifactStore:
+        Type: S3
+        Location: !Ref PipelineArtifactBucket
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: GitHubSource
+              ActionTypeId:
+                Category: Source
+                Owner: ThirdParty
+                Provider: GitHub
+                Version: 1
+              OutputArtifacts:
+                - Name: SourceArtifact
+              Configuration:
+                Owner: !Ref GitHubOwner
+                Repo: !Ref GitHubRepo
+                Branch: !Ref GitHubBranch
+                OAuthToken: !Ref GitHubOAuthToken
+              RunOrder: 1
+        - Name: Deploy
+          Actions:
+            - Name: S3Deploy
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: S3
+                Version: 1
+              InputArtifacts:
+                - Name: SourceArtifact
+              Configuration:
+                BucketName: !Ref WebsiteBucket
+                Extract: "true"
+              RunOrder: 1
+
+  CodePipelineServiceRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codepipeline.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Policies:
+        - PolicyName: CodePipelinePermissions
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:DeleteObject
+                Resource: !Sub 'arn:aws:s3:::${PipelineArtifactBucket}/*'
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                Resource: !Sub 'arn:aws:s3:::${PipelineArtifactBucket}'
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:DeleteObject
+                Resource: !Sub 'arn:aws:s3:::${WebsiteBucket}/*'
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                Resource: !Sub 'arn:aws:s3:::${WebsiteBucket}'
+
+
+
+Outputs:
+  WebsiteURL:
+    Description: "URL of the static website"
+    Value: !GetAtt WebsiteBucket.WebsiteURL
