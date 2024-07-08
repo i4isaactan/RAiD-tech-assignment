@@ -61,3 +61,5 @@ Sustainability of resources such as energy or costs:
 
 This architecture ensures that the National Day Parade web application is secure, highly available, and efficient, aligning with the AWS Well-Architected Framework.
 
+**Note**
+-  Another consideration for the architecture would be to make the back end serverless. This could be done with an API gateway attatched to cloudfront instead of an autoscaling group, which then points to Lamda service which points to the Aurora database for postgre. This provides a serverless architecture which would ensure high availability and tolerance. Lamda functions and the Aurora database would be able to scale in and out automatically according to traffic, negating the need for us to manually scale the auto scaling groups in the previous architecture.
