@@ -34,4 +34,5 @@
      ```
      http://localhost:5252/healthcheck
      ```
-
+**Note**
+- Upon further consideration(and tutorials), I realised that I should have copied the `requirments.txt` file first before the application file itself. This would be more optimal as Docker caches files in steps, hence having the `exercise.py` file being run in the later steps would result in faster building of docker images(since application files are more likely to be edited).
